@@ -183,5 +183,14 @@ ruleTester.run("no-floating-promise", rule, {
             },
             errors: [{ messageId: "foundFloating" }]
         },
+        {
+            code: 'const foo = async () => { return null; }; foo();',
+            output: 'const foo = async () => { return null; }; await foo();',
+            languageOptions: {
+              ecmaVersion: 8,
+              parser: parser("floating-promise-arrow-function-expression")
+            },
+            errors: [{ messageId: "foundFloating" }]
+        }
     ]
 });
